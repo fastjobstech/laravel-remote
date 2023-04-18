@@ -15,12 +15,18 @@ class RemoteConfig
             throw CouldNotExecuteCommand::hostNotFoundInConfig($hostName);
         }
 
-        foreach (['host', 'port', 'user', 'path'] as $configValue) {
+        foreach (['host', 'port', 'user', 'path', 'privateKeyPath'] as $configValue) {
             if (is_null($configValues[$configValue])) {
                 throw CouldNotExecuteCommand::requiredConfigValueNotSet($hostName, $configValue);
             }
         }
 
-        return new HostConfig(...$configValues);
+        return new HostConfig(
+            $configValues['host'],
+            $configValues['port'],
+            $configValues['user'],
+            $configValues['path'],
+            $configValues['privateKeyPath']
+        );
     }
 }
